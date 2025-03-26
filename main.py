@@ -9,7 +9,7 @@ def get_image_files(folder_path):
     return [file for file in os.listdir(folder_path) if file.lower().endswith(SUPPORTED_FORMATS)]
 
 def main():
-    st.title("🎲 隨機圖片展示器")
+    st.title("🎲 隨機主題展示器")
     img_folder = "img"
 
     if not os.path.exists(img_folder):
@@ -27,7 +27,7 @@ def main():
         st.session_state.current_image = random.choice(image_files)
 
     # 按鈕：抽一張新圖片
-    if st.button("🔁 抽另一張圖片"):
+    if st.button("🔁 抽另一個主題"):
         st.session_state.current_image = random.choice(image_files)
 
     selected_image = st.session_state.current_image
