@@ -31,7 +31,7 @@ def main():
     image_path = os.path.join(img_folder, selected_image)
 
     st.subheader(f"你抽到的圖片是：`{selected_image}`")
-    st.image(Image.open(image_path), use_column_width=True)
+    st.image(Image.open(image_path), use_container_width=True)
 
     # 加一個按鈕重新抽
     if st.button("🔁 抽另一張圖片"):
