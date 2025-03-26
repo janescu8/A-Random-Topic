@@ -3,19 +3,15 @@ import os
 import random
 from PIL import Image
 
-# 支援的圖片格式
 SUPPORTED_FORMATS = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp')
 
-# 取得 img 資料夾內所有圖片檔案
 def get_image_files(folder_path):
     return [file for file in os.listdir(folder_path) if file.lower().endswith(SUPPORTED_FORMATS)]
 
-# 主程式
 def main():
     st.title("🎲 隨機圖片展示器")
     img_folder = "img"
 
-    # 檢查資料夾是否存在
     if not os.path.exists(img_folder):
         st.error(f"找不到資料夾: {img_folder}")
         return
@@ -26,16 +22,17 @@ def main():
         st.warning("資料夾裡沒有支援的圖片格式。")
         return
 
-    # 隨機選取一張圖片
-    selected_image = random.choice(image_files)
-    image_path = os.path.join(img_folder, selected_image)
+    # 初始化 session_state
+    if "selected_image" not in st.session_state or st.button("🔁 抽另一張圖片"):
+        st.session_state.selected_image = random.choice(image_files)
 
-    st.subheader(f"你抽到的圖片是：`{selected_image}`")
-    st.image(Image.open(image_path), use_container_width=True)
+    image_path = os.path.join(img_folder, st.session_state.selected_image)
 
-    # 加一個按鈕重新抽
-    if st.button("🔁 抽另一張圖片"):
-        st.experimental_rerun()
+    try:
+        st.subheader(f"你抽到的圖片是：`{st.session_state.selected_image}`")
+        st.image(Image.open(image_path), use_container_width=True)
+    except Exception as e:
+        st.error(f"圖片無法載入：{e}")
 
 if __name__ == "__main__":
     main()
